@@ -5,7 +5,9 @@ public class ServiceModule {
         private Service service;
 
         private ServiceModule() {
-            service = new ServiceImp();
+            ConversorHelper conversor = new ConversorHelperImp();
+            
+            service = new ServiceImp(conversor);
         }
 
         public static ServiceModule getInstance() {

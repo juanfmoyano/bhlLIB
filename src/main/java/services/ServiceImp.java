@@ -6,9 +6,11 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ServiceImp implements Service {
     private WordsBighugelabsAPI wbhlAPI;
-
-    public ServiceImp() {
+    private ConversorHelper conversor; 
+    
+    public ServiceImp(ConversorHelper conversor) {
         connect();
+        this.conversor = conversor;
     }
 
     public void connect() {
@@ -24,6 +26,7 @@ public class ServiceImp implements Service {
         Response<String> callResponse;
         callResponse = wbhlAPI.getTerm(term).execute();
         meaning = callResponse.body();
+        meaning = conversor.convertString(meaning);
         return meaning;
     }
 
