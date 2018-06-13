@@ -6,7 +6,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 class BigHugeLabsServiceImp implements BigHugeLabsService {
     private WordsBighugelabsAPI wbhlAPI;
-    private ConversorHelper conversor; 
+    private ConversorHelper conversor;
+    private final String baseURL = "http://words.bighugelabs.com/api/2/";
     
     public BigHugeLabsServiceImp(ConversorHelper conversor) {
         connect();
@@ -14,20 +15,28 @@ class BigHugeLabsServiceImp implements BigHugeLabsService {
     }
 
     private void connect() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://words.bighugelabs.com/api/2/")
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .build();
+        Retrofit retrofit = createRetrofit();
         wbhlAPI = retrofit.create(WordsBighugelabsAPI.class);
     }
 
-    public String getMeaning(String term) throws Exception {
-        String meaning = null;
-        Response<String> callResponse;
-        callResponse = wbhlAPI.getTerm(term).execute();
-        meaning = callResponse.body();
-        meaning = conversor.convertString(meaning);
-        return meaning;
+    private Retrofit createRetrofit(){
+        return new Retrofit.Builder()
+                .baseUrl(baseURL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build();
     }
 
+    public String getMeaning(String term) throws Exception {
+        Response<String> callResponse = callResponse(term);
+        String meaning = callResponse.body();
+        return finalConvertToString(meaning);
+    }
+
+    private Response<String> callResponse(String term) throws Exception{
+        return wbhlAPI.getTerm(term).execute();
+    }
+
+    private String finalConvertToString(String meaning){
+        return conversor.convertString(meaning);
+    }
 }
