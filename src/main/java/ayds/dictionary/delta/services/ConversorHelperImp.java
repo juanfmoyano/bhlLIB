@@ -1,4 +1,4 @@
-package services;
+package ayds.dictionary.delta.services;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;

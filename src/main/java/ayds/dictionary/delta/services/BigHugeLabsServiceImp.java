@@ -1,19 +1,19 @@
-package services;
+package ayds.dictionary.delta.services;
 
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class ServiceImp implements Service {
+class BigHugeLabsServiceImp implements BigHugeLabsService {
     private WordsBighugelabsAPI wbhlAPI;
     private ConversorHelper conversor; 
     
-    public ServiceImp(ConversorHelper conversor) {
+    public BigHugeLabsServiceImp(ConversorHelper conversor) {
         connect();
         this.conversor = conversor;
     }
 
-    public void connect() {
+    private void connect() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://words.bighugelabs.com/api/2/")
                 .addConverterFactory(ScalarsConverterFactory.create())
