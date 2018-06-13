@@ -28,3 +28,19 @@ Para consultar por un termino en la API se utiliza el comando:
 Al metodo se le pasa un ```String``` que corresponde al ```término``` que se quiere buscar en el diccionario provisto
 Si el servicio encuentra un ```significado``` para dicho término, lo devuelve. En caso contrario, el metodo devuelve un valor ```null```
 y es necesario capturar la excepción.
+
+## IMPORTANTE
+
+El módulo no soporta la búsqueda de términos con espacios. Es necesario incluir el siguiente código en la aplicación:
+
+    public boolean isWellFormedTermFormat(String term) {
+        char termLetter;
+        boolean wellFormedTerm = true;
+        for (int i = 0; i < term.length() && wellFormedTerm; i++) {
+            termLetter = term.charAt(i);
+            if (Character.isLetter(termLetter)) {
+                wellFormedTerm = false;
+            }
+        }
+        return wellFormedTerm;
+    }
