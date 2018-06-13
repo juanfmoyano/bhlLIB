@@ -7,7 +7,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 class BigHugeLabsServiceImp implements BigHugeLabsService {
     private WordsBighugelabsAPI wbhlAPI;
     private ConversorHelper conversor;
-    private final String baseURL = "http://words.bighugelabs.com/api/2/";
+    private static final String baseURL = "http://words.bighugelabs.com/api/2/";
     
     public BigHugeLabsServiceImp(ConversorHelper conversor) {
         connect();
